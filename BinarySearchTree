@@ -1,6 +1,4 @@
-import java.util.*;
-import java.util.Scanner;
-import java.io.*;
+
 class Link
 {
 	int data;
@@ -79,25 +77,150 @@ public class Binarytree{
 		
 		
 	}
+	static void printGivenLevel(Link root,int i)
+	{
+		if(root==null)
+			return;
+		if(i==1)
+		{
+			System.out.print(root.data+" ");
+		}
+		else
+		{
+			printGivenLevel(root.left,i-1);
+			printGivenLevel(root.right,i-1);
+		}
+	}
+	void Levelorder(Link root,int height)
+	{
+		int i=1;
+		if (root==null)
+			return;
+		
+		for(i=1;i<=height;i++)
+		{
+			printGivenLevel(root,i);
+		}
+	}
+	static  Link Search(Link root, int data)
+	{
+		if(root == null || data == root.data)
+		{
+			return root ;
+		}
+		else if(data<=root.data) 
+			return Search(root.left,data);
+		else 
+			return Search(root.right,data);
+	}
+	
+	static Link Min(Link root)
+	{
+		if(root.left == null)
+		{
+			System.out.println(root.data);
+			return root;
+		}
+			
+		else
+			return Min(root.left);
+	}
+	static Link Max(Link root)
+	{
+		if(root.right == null)
+		{
+			System.out.println(root.data);
+			return root;
+		}
+		else
+			return Max(root.right);
+	}
+	static int height(Link root)
+	{
+		if (root==null)
+		{
+			return 0;
+		}
+		else {
+			int lheight = height(root.left);
+			int rheight = height(root.right);
+			if(lheight>rheight)
+				return (lheight+1);
+			else
+				return (rheight+1);
+		}
+	
+	}
+	
+	static Link Successor(Link root,int data)
+	{
+		Link current = Search(root,data);
+		if(current == null)
+			return null;
+		else if(current.right !=null) //if a node has right subtree
+		{
+			Link temp = current.right;
+			while(temp.left !=null)
+			{
+				temp = temp.left;
+			}
+			return temp;
+		}
+		else //if node doesnt have right sub tree
+		{
+			Link successor = null ;
+			Link ancestor = root;
+			while(ancestor!=current)
+			{
+				if(current.data <= ancestor.data)
+				{
+					successor = ancestor;
+					ancestor = ancestor.left;
+				}
+				else
+					ancestor = ancestor.right;
+			}
+			return successor;
+		}
+			
+	}
 	public static void main(String args[])
 	{
 		Binarytree tree = new Binarytree();
+		
 		root=Insert(root,5);
 		root=Insert(root,10);
 		root=Insert(root,3);
-		root= Insert(root,6);
+		root= Insert(root,1);
 		System.out.println("PreOrder Traversal");
 		tree.Preorder(root);
-		System.out.println();
+		System.out.println("\n");
 		System.out.println("Inorder Traversal");
 		tree.Inorder(root);
-		System.out.println();
+		System.out.println("\n");
 		System.out.println("Postorder Traversal");
 		tree.Postorder(root);
+		System.out.println("\n\n");
+		int h = height(root);
+		System.out.println("Height of the tree is "+h+"\n\n");
+		Link temp ;
+		System.out.println("Levelorder Traversal");
+		tree.Levelorder(root,h);
+		temp = Search(root,7);
+		System.out.println("\n\nSearching.....");
+		if(temp==null)
+			System.out.print("not present");
+		else
+			System.out.println("present");
 		
-		
-		
-		
+		System.out.println("\n\nminimum");
+		temp = Min(root);
+		//System.out.println(temp.data);
+		System.out.println("\n\nmaxmimum");
+		temp = Max(root);
+		//System.out.println("temp.data");
+		temp = Successor(root,5);
+		System.out.println("\n\nSuccessor "+temp.data);
 	}
 }
 
