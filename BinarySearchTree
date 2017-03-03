@@ -1,0 +1,103 @@
+import java.util.*;
+import java.util.Scanner;
+import java.io.*;
+class Link
+{
+	int data;
+	Link left;
+	Link right;
+	Link(int data)
+	{
+		this.data = data;
+		left=null;
+		right=null;
+	}
+}
+
+public class Binarytree{
+	static Link root;
+	
+	Binarytree()
+	{
+		root = null;
+	}
+	
+	
+	
+	static Link GetNewNode(int data)
+	{
+		Link link = new Link(data);
+		link.left = link.right = null;
+		return link;
+	}
+	static Link Insert(Link root ,int data)
+	{
+		if(root==null)
+		{
+			root = GetNewNode(data);
+		}
+		else if(data <= root.data)
+		{
+			root.left = Insert(root.left,data);
+		}
+		else
+		{
+			root.right = Insert(root.right,data);
+		}
+		return root;
+	}
+	void Preorder(Link root)
+	{
+		if(root == null)
+		{
+			return;
+		}
+		System.out.print(root.data+" ");
+		Preorder(root.left);
+		Preorder(root.right);
+	}
+	void Inorder(Link root)
+	{
+		if(root == null)
+		{
+			return;
+		}
+		Inorder(root.left);
+		System.out.print(root.data+" ");
+		Inorder(root.right);
+		
+	}
+	void Postorder(Link root)
+	{
+		if(root == null)
+		{
+			return;
+		}
+		Inorder(root.left);
+		Inorder(root.right);
+		System.out.print(root.data+" ");
+		
+		
+	}
+	public static void main(String args[])
+	{
+		Binarytree tree = new Binarytree();
+		root=Insert(root,5);
+		root=Insert(root,10);
+		root=Insert(root,3);
+		root= Insert(root,6);
+		System.out.println("PreOrder Traversal");
+		tree.Preorder(root);
+		System.out.println();
+		System.out.println("Inorder Traversal");
+		tree.Inorder(root);
+		System.out.println();
+		System.out.println("Postorder Traversal");
+		tree.Postorder(root);
+		
+		
+		
+		
+	}
+}
+
