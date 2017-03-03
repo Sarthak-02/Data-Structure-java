@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.Scanner;
 import java.io.*;
-sdfsdsdfsf
+
 
 class Link{
 	int data;
