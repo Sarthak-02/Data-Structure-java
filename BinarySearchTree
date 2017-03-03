@@ -196,6 +196,13 @@ public class Binarytree{
 			return findMin(root.left,data);
 		}
 	}
+	static int Totalnodes(Link root)
+	{
+		if(root == null)
+			return 0;
+		return Totalnodes(root.right)+Totalnodes(root.left)+1;
+		
+	}
 	static Link Delete(Link root,int key)
 	{
 		 if (root == null)  return root;
@@ -225,7 +232,24 @@ public class Binarytree{
 	            root.right = Delete(root.right, root.data);
 	        }
 	 
-	        return root;	}
+	        return root;
+	        }
+	static int Leafnodes(Link root)
+	{
+		if(root == null)
+		{
+			return 0;
+		}
+		else if (root.left == null && root.right == null)
+		{
+			return 1;
+		}
+		else
+		{
+			return Leafnodes(root.right)+Leafnodes(root.left);
+		}
+			
+	}
 	public static void main(String args[])
 	{
 		Binarytree tree = new Binarytree();
@@ -267,6 +291,12 @@ public class Binarytree{
 		Delete(root,10);
 		System.out.println("\n\nInorder Traversal after Deletion");
 		tree.Inorder(root);
+		int n = Totalnodes(root);
+		System.out.println("\n\nTotal number of nodes"+n);
+		n = Leafnodes(root);
+		System.out.println("\n\nTotal number of leaf nodes"+n);
+		
+		
 	}
 }
 
