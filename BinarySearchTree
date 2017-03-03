@@ -184,6 +184,48 @@ public class Binarytree{
 		}
 			
 	}
+	static Link findMin(Link root,int data)
+	{
+		
+		if(root == null)
+		{
+			return root;
+		}
+		else
+		{
+			return findMin(root.left,data);
+		}
+	}
+	static Link Delete(Link root,int key)
+	{
+		 if (root == null)  return root;
+		 
+	        /* Otherwise, recur down the tree */
+	        if (key < root.data)
+	            root.left = Delete(root.left, key);
+	        else if (key > root.data)
+	            root.right = Delete(root.right, key);
+	 
+	        // if key is same as root's key, then This is the node
+	        // to be deleted
+	        else
+	        {
+	            // node with only one child or no child
+	            if (root.left == null)
+	                return root.right;
+	            else if (root.right == null)
+	                return root.left;
+	 
+	            // node with two children: Get the inorder successor (smallest
+	            // in the right subtree)
+	            Link temp = findMin(root.right,key);
+	            root.data = temp.data;
+	 
+	            // Delete the inorder successor
+	            root.right = Delete(root.right, root.data);
+	        }
+	 
+	        return root;	}
 	public static void main(String args[])
 	{
 		Binarytree tree = new Binarytree();
@@ -221,6 +263,10 @@ public class Binarytree{
 		//System.out.println("temp.data");
 		temp = Successor(root,5);
 		System.out.println("\n\nSuccessor "+temp.data);
+		System.out.println("\n\nDelete a Node");
+		Delete(root,10);
+		System.out.println("\n\nInorder Traversal after Deletion");
+		tree.Inorder(root);
 	}
 }
 
